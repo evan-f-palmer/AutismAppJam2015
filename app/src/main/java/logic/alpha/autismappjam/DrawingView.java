@@ -1,22 +1,30 @@
 package logic.alpha.autismappjam;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.media.Image;
+import android.provider.MediaStore;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 
 /**
  * Created by evan on 4/15/15.
  */
 public class DrawingView  extends View {
     private String imageFile;
+    private Bitmap imageBitmap;
 
     private Path drawPath;
     private Paint drawPaint, canvasPaint;
@@ -27,13 +35,12 @@ public class DrawingView  extends View {
     public DrawingView(Context context, AttributeSet attrs){
         super(context, attrs);
         imageFile = null;
+
         setupDrawing();
     }
 
     public void setImageFile(String imageFile) {
         this.imageFile = imageFile;
-        canvasBitmap = loadImage(getWidth(), getHeight());
-        drawCanvas = new Canvas(canvasBitmap);
     }
 
     public void setColor(String newColor){
@@ -42,17 +49,36 @@ public class DrawingView  extends View {
         drawPaint.setColor(paintColor);
     }
 
+    public void saveDrawing(Activity currentActivity) {
+        if(imageFile == null) {
+            imageFile = CameraFunctions.createImageFile(CameraFunctions.getGlobalPicturesDir()).getAbsolutePath();
+        }
+
+        setDrawingCacheEnabled(true);
+        try {
+            FileOutputStream out = new FileOutputStream(imageFile);
+            getDrawingCache().compress(Bitmap.CompressFormat.PNG, 100, out);
+            out.close();
+            CameraFunctions.galleryAddPic(currentActivity, new File(imageFile));
+        } catch(Exception ex) {
+            destroyDrawingCache();
+            throw new CouldNotSave();
+        }
+        destroyDrawingCache();
+    }
+
     @Override
     protected void onSizeChanged(int w, int h, int oldw, int oldh) {
         super.onSizeChanged(w, h, oldw, oldh);
 
-        if(imageFile == null) {
-            canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
-        } else {
-            canvasBitmap = loadImage(w, h);
-        }
-
+        canvasBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888);
         drawCanvas = new Canvas(canvasBitmap);
+
+        if(imageFile == null) {
+        } else {
+            loadImage(w, h);
+            drawCanvas.drawBitmap(imageBitmap, 0, 0, new Paint(Paint.DITHER_FLAG));
+        }
     }
 
     @Override
@@ -94,7 +120,7 @@ public class DrawingView  extends View {
         canvasPaint = new Paint(Paint.DITHER_FLAG);
     }
 
-    private Bitmap loadImage(int targetW, int targetH) {
+    private void loadImage(int targetW, int targetH) {
         // Get the dimensions of the bitmap
         BitmapFactory.Options bmOptions = new BitmapFactory.Options();
         bmOptions.inJustDecodeBounds = true;
@@ -110,6 +136,8 @@ public class DrawingView  extends View {
         bmOptions.inSampleSize = scaleFactor;
         bmOptions.inPurgeable = true;
 
-        return BitmapFactory.decodeFile(imageFile, bmOptions);
+        imageBitmap = BitmapFactory.decodeFile(imageFile, bmOptions);
     }
+
+    public class CouldNotSave extends RuntimeException {}
 }

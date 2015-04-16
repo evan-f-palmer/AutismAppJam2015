@@ -21,7 +21,7 @@ import java.util.Date;
 public class CameraFunctions {
     public static final int REQUEST_TAKE_PHOTO = 1;
 
-    private static File getGlobalPicturesDir() {
+    public static File getGlobalPicturesDir() {
         return Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
     }
 
@@ -31,7 +31,7 @@ public class CameraFunctions {
         return imageFileName;
     }
 
-    private static File createImageFile(File storageDir)  {
+    public static File createImageFile(File storageDir)  {
         String imageFileName = generateImageFileNameBasedOnTimeStamp();
         File image = null;
         try {

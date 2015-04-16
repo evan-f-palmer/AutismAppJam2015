@@ -15,6 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import java.io.File;
 
@@ -34,6 +35,23 @@ public class DrawingActivity extends Activity {
 
         setCurrentPaintToFirstPaint();
         loadImageIfAvailable();
+    }
+
+    public void brushClicked(View view) {
+
+    }
+
+    public void eraserClicked(View view) {
+
+    }
+
+    public void saveClicked(View view) {
+        drawingView.saveDrawing(this);
+        Toast.makeText(this, "File saved", Toast.LENGTH_SHORT).show();
+
+        Intent a = new Intent(this, MainActivity.class);
+        a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(a);
     }
 
     public void paintClicked(View view){
@@ -64,7 +82,6 @@ public class DrawingActivity extends Activity {
         String imageFile = intent.getStringExtra(CameraOrDrawingActivity.FILE_MESSAGE);
 
         if(imageFile != null) {
-            System.out.println("Image file " + imageFile);
             drawingView.setImageFile(imageFile);
         }
     }

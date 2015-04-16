@@ -27,7 +27,6 @@ public class CameraOrDrawingActivity extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CameraFunctions.REQUEST_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) {
-                CameraFunctions.galleryAddPic(this, imageFile);
                 startDrawingApp(imageFile.getPath());
             }
         }
