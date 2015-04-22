@@ -49,19 +49,17 @@ public class DrawingView  extends View {
         drawPaint.setColor(paintColor);
     }
 
-    public void saveDrawing(Activity currentActivity) {
-        if(imageFile == null) {
-            imageFile = CameraFunctions.createImageFile(CameraFunctions.getGlobalPicturesDir()).getAbsolutePath();
-        }
-
+    public void saveDrawing(Activity currentActivity, String absolutePathToFile) {
         setDrawingCacheEnabled(true);
         try {
-            FileOutputStream out = new FileOutputStream(imageFile);
+            FileOutputStream out = new FileOutputStream(absolutePathToFile);
             getDrawingCache().compress(Bitmap.CompressFormat.PNG, 100, out);
             out.close();
-            CameraFunctions.galleryAddPic(currentActivity, new File(imageFile));
+            CameraFunctions.galleryAddPic(currentActivity, new File(absolutePathToFile));
         } catch(Exception ex) {
             destroyDrawingCache();
+            System.err.println("could not save to " + absolutePathToFile);
+            ex.printStackTrace();
             throw new CouldNotSave();
         }
         destroyDrawingCache();
@@ -93,7 +91,8 @@ public class DrawingView  extends View {
         float touchY = event.getY();
 
         switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: drawPath.moveTo(touchX, touchY); break;
+            case MotionEvent.ACTION_DOWN: drawPath.moveTo(touchX, touchY);
+                                          drawPath.lineTo(touchX, touchY); break;
             case MotionEvent.ACTION_MOVE: drawPath.lineTo(touchX, touchY); break;
             case MotionEvent.ACTION_UP:   drawCanvas.drawPath(drawPath, drawPaint);
                                           drawPath.reset();                break;

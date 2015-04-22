@@ -25,6 +25,7 @@ public class DrawingActivity extends Activity {
 
     private DrawingView drawingView;
     private ImageButton currentPaint;
+    private MoodEntry moodEntry;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,8 @@ public class DrawingActivity extends Activity {
 
         setCurrentPaintToFirstPaint();
         loadImageIfAvailable();
+
+        moodEntry = (MoodEntry)getIntent().getSerializableExtra(CameraOrDrawingActivity.NEW_MOOD);
     }
 
     public void brushClicked(View view) {
@@ -46,12 +49,8 @@ public class DrawingActivity extends Activity {
     }
 
     public void saveClicked(View view) {
-        drawingView.saveDrawing(this);
-        Toast.makeText(this, "File saved", Toast.LENGTH_SHORT).show();
-
-        Intent a = new Intent(this, MainActivity.class);
-        a.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        startActivity(a);
+        saveImage();
+        startMainMenuActivity();
     }
 
     public void paintClicked(View view){
@@ -59,6 +58,26 @@ public class DrawingActivity extends Activity {
             releaseCurrentPaintButton();
             selectPaintButton((ImageButton) view);
         }
+    }
+
+    private void saveImage() {
+        Toast.makeText(this, "Saving", Toast.LENGTH_SHORT).show();
+
+        if(!moodEntry.isImageFileAbsolutePathSet()) {
+            moodEntry.createImageFile(FileUtils.getGlobalPicturesDir());
+        }
+
+        drawingView.saveDrawing(this, moodEntry.getImageFileAbsolutePath());
+        moodEntry.setImageToInitialized();
+        MoodLogger.saveMoodEntry(this, moodEntry);
+
+        Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
+    }
+
+    private void startMainMenuActivity() {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     private void setCurrentPaintToFirstPaint() {
