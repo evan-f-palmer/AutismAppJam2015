@@ -5,10 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.ImageButton;
 
 import java.io.File;
+
+import logic.alpha.autismappjam.mood.MoodEntry;
+import logic.alpha.autismappjam.util.CameraUtils;
+import logic.alpha.autismappjam.util.FileUtils;
 
 public class CameraOrDrawingActivity extends Activity {
     public final static String FILE_MESSAGE = "file_message";
@@ -31,13 +34,13 @@ public class CameraOrDrawingActivity extends Activity {
     }
 
     public void cameraButtonClicked(View view) {
-        imageFile = moodEntry.createImageFile(FileUtils.getGlobalPicturesDir());
-        CameraFunctions.dispatchTakePictureIntent(CameraOrDrawingActivity.this, imageFile);
+        imageFile = moodEntry.createImageFile(FileUtils.getGlobalDocsDir());
+        CameraUtils.dispatchTakePictureIntent(CameraOrDrawingActivity.this, imageFile);
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == CameraFunctions.REQUEST_TAKE_PHOTO) {
+        if (requestCode == CameraUtils.REQUEST_TAKE_PHOTO) {
             if (resultCode == RESULT_OK) {
                 moodEntry.setImageToInitialized();
                 startDrawingApp(imageFile.getPath());
@@ -60,13 +63,13 @@ public class CameraOrDrawingActivity extends Activity {
     }
 
     private void configureCameraButton() {
-        if (!CameraFunctions.isCameraHardwareAvailable(this)) {
-            final Button cameraButton = (Button) findViewById(R.id.cameraButton);
+        if (!CameraUtils.isCameraHardwareAvailable(this)) {
+            final ImageButton cameraButton = (ImageButton) findViewById(R.id.cameraButton);
             removeCameraButton(cameraButton);
         }
     }
 
-    private void removeCameraButton(Button cameraButton) {
+    private void removeCameraButton(ImageButton cameraButton) {
         System.err.println("Error: No camera Available");
         ViewGroup layout = (ViewGroup) cameraButton.getParent();
         if(layout != null) {

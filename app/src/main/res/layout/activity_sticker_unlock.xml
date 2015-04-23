@@ -8,7 +8,7 @@
     android:orientation="vertical"
     tools:context="logic.alpha.autismappjam.StickerUnlockActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="100dp"
@@ -17,7 +17,15 @@
         android:layout_alignParentStart="true"
         android:id="@+id/linearLayout3"
         android:layout_above="@+id/selectLayout">
-    </LinearLayout>
+
+        <ImageView
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:id="@+id/stickerView"
+            android:layout_gravity="center_horizontal"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/selectLayout"

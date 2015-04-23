@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageButton;
+
+import logic.alpha.autismappjam.mood.MoodEntry;
+import logic.alpha.autismappjam.mood.MoodLogger;
 
 
 public class MoodSelectActivity extends Activity {

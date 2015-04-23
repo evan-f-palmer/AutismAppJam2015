@@ -1,26 +1,42 @@
 package logic.alpha.autismappjam;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+
+import logic.alpha.autismappjam.mood.MoodEntry;
+import logic.alpha.autismappjam.mood.MoodLogger;
 
 
 public class ViewMoodLogActivity extends Activity {
+    public static final String MOOD_TO_VIEW = "moodToView";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_mood_log);
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        init();
+    }
+
+    private void init() {
         List<MoodEntry> moodEntries = loadMoodEntries();
         ViewGroup moodLogs = (ViewGroup)findViewById(R.id.moodLogs);
+        Collections.reverse(moodEntries);
+        moodLogs.removeAllViews();
         addMoodEntriesToView(moodEntries, moodLogs);
     }
 
@@ -73,6 +89,8 @@ public class ViewMoodLogActivity extends Activity {
     }
 
     private void openMoodEntry(MoodEntry moodEntry) {
-
+        Intent intent = new Intent(this, MoodViewActivity.class);
+        intent.putExtra(MOOD_TO_VIEW, moodEntry);
+        startActivity(intent);
     }
 }

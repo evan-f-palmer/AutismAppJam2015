@@ -8,23 +8,32 @@
     android:orientation="vertical"
     tools:context="logic.alpha.autismappjam.CameraOrDrawingActivity">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="take a picture"
-        android:id="@+id/cameraButton"
-        android:layout_marginBottom="62dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:onClick="cameraButtonClicked"/>
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Draw from scratch"
-        android:id="@+id/drawButton"
-        android:layout_above="@+id/cameraButton"
-        android:layout_centerHorizontal="true"
-        android:onClick="drawFromScratchButtonClicked"/>
+        <ImageButton
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:background="@drawable/camera"
+            android:id="@+id/cameraButton"
+            android:onClick="cameraButtonClicked"
+            android:layout_alignTop="@+id/drawButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+
+        <ImageButton
+            android:layout_width="125dp"
+            android:layout_height="125dp"
+            android:background="@drawable/brush"
+            android:id="@+id/drawButton"
+            android:onClick="drawFromScratchButtonClicked"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
 
 </RelativeLayout>

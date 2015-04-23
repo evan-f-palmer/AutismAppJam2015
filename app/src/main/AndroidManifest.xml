@@ -15,7 +15,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,6 +27,7 @@
             android:name=".CameraOrDrawingActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_camera_or_drawing"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme" >
         </activity>
         <activity
@@ -36,15 +38,27 @@
         </activity>
         <activity
             android:name=".MoodSelectActivity"
-            android:label="@string/title_activity_mood_select" >
+            android:label="@string/title_activity_mood_select"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".StickerUnlockActivity"
-            android:label="@string/title_activity_sticker_unlock" >
+            android:label="@string/title_activity_sticker_unlock"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ViewMoodLogActivity"
-            android:label="@string/title_activity_view_mood_log" >
+            android:label="@string/title_activity_view_mood_log"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".MoodViewActivity"
+            android:label="@string/title_activity_mood_view"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ShareReminderActivity"
+            android:label="@string/title_activity_share_reminder" >
         </activity>
     </application>
 

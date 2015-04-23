@@ -4,25 +4,33 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Camera;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
-import android.media.Image;
-import android.provider.MediaStore;
+import android.graphics.Rect;
 import android.util.AttributeSet;
+import android.util.TypedValue;
 import android.view.MotionEvent;
 import android.view.View;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 
 /**
  * Created by evan on 4/15/15.
  */
 public class DrawingView  extends View {
+    private enum Mode {
+        draw,
+        erase,
+        sticker
+    };
+
+    private Bitmap sticker;
+    private Mode mode;
+    private float brushSize, lastBrushSize;
+
     private String imageFile;
     private Bitmap imageBitmap;
 
@@ -35,8 +43,22 @@ public class DrawingView  extends View {
     public DrawingView(Context context, AttributeSet attrs){
         super(context, attrs);
         imageFile = null;
-
+        sticker   = null;
+        mode = Mode.draw;
         setupDrawing();
+    }
+
+    public void setModeDraw() {
+        mode = Mode.draw;
+    }
+
+    public void setModeErase() {
+        mode = Mode.erase;
+    }
+
+    public void setModePlaceSticker(Bitmap sticker) {
+        mode = Mode.sticker;
+        this.sticker = sticker;
     }
 
     public void setImageFile(String imageFile) {
@@ -55,11 +77,9 @@ public class DrawingView  extends View {
             FileOutputStream out = new FileOutputStream(absolutePathToFile);
             getDrawingCache().compress(Bitmap.CompressFormat.PNG, 100, out);
             out.close();
-            CameraFunctions.galleryAddPic(currentActivity, new File(absolutePathToFile));
         } catch(Exception ex) {
             destroyDrawingCache();
-            System.err.println("could not save to " + absolutePathToFile);
-            ex.printStackTrace();
+            System.err.println("Could not save to " + absolutePathToFile);
             throw new CouldNotSave();
         }
         destroyDrawingCache();
@@ -75,6 +95,7 @@ public class DrawingView  extends View {
         if(imageFile == null) {
         } else {
             loadImage(w, h);
+
             drawCanvas.drawBitmap(imageBitmap, 0, 0, new Paint(Paint.DITHER_FLAG));
         }
     }
@@ -87,16 +108,10 @@ public class DrawingView  extends View {
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        float touchX = event.getX();
-        float touchY = event.getY();
-
-        switch (event.getAction()) {
-            case MotionEvent.ACTION_DOWN: drawPath.moveTo(touchX, touchY);
-                                          drawPath.lineTo(touchX, touchY); break;
-            case MotionEvent.ACTION_MOVE: drawPath.lineTo(touchX, touchY); break;
-            case MotionEvent.ACTION_UP:   drawCanvas.drawPath(drawPath, drawPaint);
-                                          drawPath.reset();                break;
-            default:                      return false;
+        switch (mode) {
+            case draw:    drawMode(event); break;
+            case erase:   eraseMode(event); break;
+            case sticker: stickerMode(event); break;
         }
 
         // Cause the onDraw method to be called
@@ -104,20 +119,65 @@ public class DrawingView  extends View {
         return true;
     }
 
+    public void setBrushSize(float newSize){
+        float pixelAmount = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
+                newSize, getResources().getDisplayMetrics());
+        brushSize = pixelAmount;
+        drawPaint.setStrokeWidth(brushSize);
+    }
+
+    private void drawMode(MotionEvent event) {
+        float touchX = event.getX();
+        float touchY = event.getY();
+
+        switch (event.getAction()) {
+            case MotionEvent.ACTION_DOWN:
+                drawPath.moveTo(touchX, touchY);
+                break;
+            case MotionEvent.ACTION_MOVE:
+                drawPath.lineTo(touchX, touchY);
+                break;
+            case MotionEvent.ACTION_UP:
+                drawPath.lineTo(touchX + 1, touchY + 1);
+                drawCanvas.drawPath(drawPath, drawPaint);
+                drawPath.reset();
+                break;
+        }
+    }
+
+    private void eraseMode(MotionEvent event) {
+
+    }
+
+    private void stickerMode(MotionEvent event) {
+        float touchX = event.getX();
+        float touchY = event.getY();
+        if(event.getAction() == MotionEvent.ACTION_DOWN) {
+            drawCanvas.drawBitmap(sticker, touchX - sticker.getWidth() / 2, touchY - sticker.getHeight() / 2, null);
+        }
+    }
+
     private void setupDrawing(){
         drawPath = new Path();
         drawPaint = new Paint();
 
+        brushSize = getResources().getInteger(R.integer.medium_size);
+        lastBrushSize = brushSize;
+
         drawPaint.setColor(paintColor);
 
         drawPaint.setAntiAlias(true);
-        drawPaint.setStrokeWidth(20);
         drawPaint.setStyle(Paint.Style.STROKE);
         drawPaint.setStrokeJoin(Paint.Join.ROUND);
         drawPaint.setStrokeCap(Paint.Cap.ROUND);
+        drawPaint.setStrokeWidth(brushSize);
 
         canvasPaint = new Paint(Paint.DITHER_FLAG);
     }
+
+//    private void loadImage(int targetW, int targetH) {
+//        imageBitmap = ImageUtils.getImageBitmap(imageFile, targetW, targetH);
+//    }
 
     private void loadImage(int targetW, int targetH) {
         // Get the dimensions of the bitmap

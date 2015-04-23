@@ -11,6 +11,9 @@
     <string name="title_activity_mood_select">MoodSelect</string>
     <string name="title_activity_sticker_unlock">StickerUnlockActivity</string>
     <string name="title_activity_view_mood_log">ViewMoodLogActivity</string>
-
-    <string name="hello_world">Hello world!</string>
+    <string name="title_activity_mood_view">MoodViewActivity</string>
+    <string name="title_activity_share_reminder">ShareReminderActivity</string>
+    <string name="sml">Small</string>
+    <string name="med">Medium</string>
+    <string name="lrg">Large</string>
 </resources>
