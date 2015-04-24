@@ -13,17 +13,9 @@
         android:id="@+id/layoutTitle"
         android:layout_width="match_parent"
         android:layout_height="100dp"
+        android:background="@drawable/sharemood"
         android:orientation="vertical">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText"
-
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="How are you feeling right now?"
-            android:background="#ff0f14ff"
-            android:textColor="#ffe2ff00" />
     </LinearLayout>
 
     <ScrollView
@@ -49,6 +41,10 @@
                 android:id="@+id/happyButton"
                 android:background="@drawable/happy"
                 android:onClick="happyButtonClicked"/>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="50dp" />
 
             <ImageButton
                 android:layout_width="match_parent"

@@ -14,17 +14,20 @@
         android:layout_height="30dp"
         android:orientation="vertical">
 
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/editText"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Mood log"
-            android:background="#ff0f14ff"
-            android:textColor="#ffe2ff00" />
+            android:text="Mood log"/>
+
 
     </LinearLayout>
+
+    <Space
+        android:layout_width="fill_parent"
+        android:layout_height="30dp"
+        android:id="@+id/space"/>
 
     <ScrollView
         android:id="@+id/scrollView1"
@@ -33,9 +36,9 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@id/layoutTitle"
-        android:layout_alignLeft="@+id/layoutTitle"
-        android:layout_alignStart="@+id/layoutTitle">
+        android:layout_below="@id/space"
+        android:layout_alignLeft="@+id/space"
+        android:layout_alignStart="@+id/space">
 
         <LinearLayout
             android:layout_width="match_parent"

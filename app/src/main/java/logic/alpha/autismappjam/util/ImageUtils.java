@@ -34,6 +34,7 @@ public class ImageUtils {
         // Decode the image file into a Bitmap sized to fill the View
         bmOptions.inJustDecodeBounds = false;
         bmOptions.inSampleSize = scaleFactor;
+        bmOptions.inSampleSize = 8;
         bmOptions.inPurgeable = true;
 
         return BitmapFactory.decodeFile(imageFile, bmOptions);

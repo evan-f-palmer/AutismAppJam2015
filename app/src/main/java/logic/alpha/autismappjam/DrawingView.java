@@ -126,6 +126,13 @@ public class DrawingView  extends View {
         drawPaint.setStrokeWidth(brushSize);
     }
 
+    public void destroy() {
+        if(imageBitmap != null) {
+            imageBitmap.recycle();
+        }
+        canvasBitmap.recycle();
+    }
+
     private void drawMode(MotionEvent event) {
         float touchX = event.getX();
         float touchY = event.getY();

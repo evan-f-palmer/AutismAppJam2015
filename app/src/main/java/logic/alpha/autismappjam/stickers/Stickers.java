@@ -26,7 +26,6 @@ public class Stickers {
     public static final String STICKERS_FILE = "stickers.txt";
     public static final String BACKUP_STICKERS_FILE = "backup_stickers.txt";
 
-
     private List<Sticker> unlockedStickers;
     private List<Sticker> lockedStickers;
 
@@ -41,6 +40,10 @@ public class Stickers {
             }
         }
     }
+
+//    public Stickers(Context context) {
+//        loadDefaults();
+//    }
 
     public void unlockSticker(Sticker sticker) {
         unlockedStickers.add(sticker);
@@ -111,11 +114,20 @@ public class Stickers {
     private void setDefaultUnlocked() {
         unlockedStickers.add(new LocalSticker(R.drawable.camera));
         unlockedStickers.add(new LocalSticker(R.drawable.brush));
+        unlockedStickers.add(new LocalSticker(R.drawable.happy));
+        unlockedStickers.add(new LocalSticker(R.drawable.sad));
+        unlockedStickers.add(new LocalSticker(R.drawable.notebook));
     }
 
     private void setDefaultLocked() {
-        lockedStickers.add(new LocalSticker(R.drawable.happy));
-        lockedStickers.add(new LocalSticker(R.drawable.sad));
+        lockedStickers.add(new LocalSticker(R.drawable.bee));
+        lockedStickers.add(new LocalSticker(R.drawable.cat));
+        lockedStickers.add(new LocalSticker(R.drawable.cow));
+        lockedStickers.add(new LocalSticker(R.drawable.good));
+        lockedStickers.add(new LocalSticker(R.drawable.monkey));
+        lockedStickers.add(new LocalSticker(R.drawable.owl));
+        lockedStickers.add(new LocalSticker(R.drawable.penguim));
+        lockedStickers.add(new LocalSticker(R.drawable.turtle));
     }
 
     public static class CouldNotLoadFile extends RuntimeException {}

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">AutismAppJam</string>
+    <string name="app_name">Mood Story</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_camera_or_drawing">CameraOrDrawingActivity</string>
     <string name="title_activity_drawing">DrawingActivity</string>

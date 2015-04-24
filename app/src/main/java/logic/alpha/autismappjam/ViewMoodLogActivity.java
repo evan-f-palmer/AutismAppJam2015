@@ -3,10 +3,13 @@ package logic.alpha.autismappjam;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.DimenRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
+import android.widget.Space;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -62,11 +65,15 @@ public class ViewMoodLogActivity extends Activity {
         initializeMoodText(moodEntry, moodLayout);
         initializeViewButton(moodEntry, moodLayout);
         viewGroup.addView(moodLayout);
+
+        Space space = new Space(this);
+        space.setMinimumHeight(60);
+        viewGroup.addView(space);
     }
 
     private void initializeDateText(MoodEntry moodEntry, View moodLayout) {
         TextView dateText   = (TextView) moodLayout.findViewById(R.id.dateText);
-        dateText.setText("Date: " + moodEntry.getEntryName());
+        dateText.setText("Date:\n" + moodEntry.getEntryName());
     }
 
     private void initializeMoodText(MoodEntry moodEntry, View moodLayout) {
@@ -75,7 +82,7 @@ public class ViewMoodLogActivity extends Activity {
     }
 
     private void initializeViewButton(final MoodEntry moodEntry, View moodLayout) {
-        Button viewButton = (Button) moodLayout.findViewById(R.id.viewButton);
+        ImageButton viewButton = (ImageButton) moodLayout.findViewById(R.id.viewButton);
         if(!moodEntry.isImageInitialized()) {
             viewButton.setVisibility(View.GONE);
         } else {

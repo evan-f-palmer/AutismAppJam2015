@@ -116,6 +116,7 @@ public class DrawingActivity extends Activity {
     }
 
     public void paintClicked(View view){
+        drawingView.setModeDraw();
         if(currentPaint != view){
             releaseCurrentPaintButton();
             selectPaintButton((ImageButton) view);
@@ -138,6 +139,7 @@ public class DrawingActivity extends Activity {
         moodEntry.setImageToInitialized();
         MoodLogger.saveMoodEntry(this, moodEntry);
 
+        drawingView.destroy();
         Toast.makeText(this, "Saved!", Toast.LENGTH_SHORT).show();
     }
 

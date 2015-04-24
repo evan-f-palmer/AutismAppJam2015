@@ -19,12 +19,13 @@
         android:layout_above="@+id/selectLayout">
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
             android:id="@+id/stickerView"
             android:layout_gravity="center_horizontal"
             android:layout_centerVertical="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/congratulations"/>
     </RelativeLayout>
 
     <RelativeLayout
@@ -35,21 +36,15 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true">
 
-        <Button
-            android:id="@+id/backToMainMenuButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Back"
-            android:onClick="backToMainMenuClicked"
-            android:layout_alignParentLeft="true" />
-
-        <Button
-                android:id="@+id/cameraOrDrawingButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Draw"
-                android:onClick="cameraOrDrawingClicked"
-                android:layout_alignParentRight="true"/>
+        <ImageButton
+            android:id="@+id/cameraOrDrawingButton"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:text="Draw"
+            android:background="@drawable/save"
+            android:onClick="cameraOrDrawingClicked"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
     </RelativeLayout>
 
 </RelativeLayout>

@@ -58,6 +58,7 @@ public class CameraOrDrawingActivity extends Activity {
     private void startDrawingApp(String imageToOpen) {
         Intent intent = new Intent(CameraOrDrawingActivity.this, DrawingActivity.class);
         intent.putExtra(NEW_MOOD, moodEntry);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(FILE_MESSAGE, imageToOpen);
         startActivity(intent);
     }

@@ -8,34 +8,37 @@
     android:orientation="vertical"
     android:background="@drawable/mainmenu">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:text="Draw"
+        android:background="@drawable/brush"
         android:id="@+id/drawButton"
         android:onClick="drawButtonClicked"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:text="Mood"
+        android:background="@drawable/happy"
         android:id="@+id/moodButton"
         android:onClick="moodButtonClicked"
-        android:layout_below="@+id/drawButton"
+        android:layout_marginTop="48dp"
+        android:layout_alignTop="@+id/drawButton"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="46dp" />
+        android:layout_alignParentStart="true" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <ImageButton
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:text="view"
         android:id="@+id/viewMoodsButton"
+        android:background="@drawable/notebook"
         android:onClick="viewMoodsButtonClicked"
         android:layout_alignTop="@+id/moodButton"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_toRightOf="@+id/drawButton"
+        android:layout_toEndOf="@+id/drawButton" />
 
 </RelativeLayout>

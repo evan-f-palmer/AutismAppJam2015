@@ -16,6 +16,11 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
     public void drawButtonClicked(View view) {
         startActivity(new Intent(this, CameraOrDrawingActivity.class));
     }

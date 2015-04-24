@@ -58,7 +58,8 @@
         </activity>
         <activity
             android:name=".ShareReminderActivity"
-            android:label="@string/title_activity_share_reminder" >
+            android:label="@string/title_activity_share_reminder"
+            android:screenOrientation="portrait"  >
         </activity>
     </application>
 
